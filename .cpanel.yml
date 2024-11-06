@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home1/iqlyhrte/inventory.ninosmarble.com/
+    - /bin/cp * $DEPLOYPATH
