@@ -1,0 +1,124 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if messages %}
+        <div class="row mt-3">
+            {% for message in messages %}
+                <div class="col-md-10 col-12 mx-auto alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="container mt-5">
+        <!-- Projects Section -->
+        <div class="card shadow-sm p-4 mb-5 rounded" style="border: none; background-color: var(--light-grey);">
+            <h2 class="mb-4" style="color: var(--dark-grey); font-weight: bold;">Projects</h2>
+            {% if projects %}
+                <div class="d-flex flex-wrap gap-2">
+                    {% for project in projects %}
+                        <a href="{% url 'project_inventory' project.id %}" class="btn btn-outline-primary mb-2 rounded-pill shadow-sm px-4" style="font-weight: bold; color: var(--primary-color);">
+                            {{ project.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: var(--dark-grey);">No projects available.</p>
+            {% endif %}
+        </div>
+
+        <!-- Category Tabs Section -->
+        <div class="category-tabs mb-4">
+            <ul class="nav nav-tabs border-0" style="font-weight: bold;">
+                {% for category, items in grouped_inventory.items %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if forloop.first %}active{% endif %}" 
+                           data-bs-toggle="tab" href="#category_{{ forloop.counter }}" 
+                           style="color: #FFFFFF; background-color: #FF6600; border-radius: 8px 8px 0 0; padding: 10px; margin-right: 5px; text-align: center;">
+                            {{ category }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Main Inventory Section with Tab Content -->
+        <div class="card shadow-sm p-4 mb-5 rounded" style="border: none; background-color: var(--light-grey);">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0" style="color: var(--dark-grey); font-weight: bold;">Main Inventory Items</h2>
+                <a href="{% url 'add-item' %}" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm">+ Add Item to Main Inventory</a>
+            </div>
+
+            <div class="tab-content">
+                {% for category, items in grouped_inventory.items %}
+                    <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="category_{{ forloop.counter }}">
+                        <!-- Category Section -->
+                        <div class="category-section my-5">
+                            <div class="row mt-4">
+                                {% for item in items %}
+                                    <div class="col-md-4 col-sm-6 mb-4">
+                                        <div class="card h-100 shadow-sm" style="border-radius: 8px;">
+                                            {% if item.image %}
+                                                <img src="{{ item.image.url }}" class="card-img-top rounded-top" alt="{{ item.name }}">
+                                            {% else %}
+                                                <img src="https://via.placeholder.com/150" class="card-img-top rounded-top" alt="Placeholder Image">
+                                            {% endif %}
+
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: var(--secondary-color); font-weight: bold;">{{ item.name }}</h5>
+                                                <p class="card-text"><strong>Price:</strong> ${{ item.price }}</p>
+                                                <p class="card-text"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                                            </div>
+
+                                            <div class="card-footer d-flex justify-content-between" style="background-color: var(--light-grey); border-top: none;">
+                                                {% if user.is_staff %}
+                                                    <a href="{% url 'edit-item' item.id %}" class="btn btn-outline-secondary btn-sm rounded-pill shadow-sm">Edit</a>
+                                                    <a href="{% url 'delete-item' item.id %}" class="btn btn-danger btn-sm rounded-pill shadow-sm">Delete</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Pagination Controls -->
+                            <div class="pagination-controls mt-3">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center">
+                                        {% if items.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link rounded-pill shadow-sm" href="?page_{{ category }}={{ items.previous_page_number }}" 
+                                                   aria-label="Previous" style="background-color: #f5f5f5; color: #444444; border: 1px solid #e0e0e0;">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% for num in items.paginator.page_range %}
+                                            <li class="page-item {% if items.number == num %}active{% endif %}">
+                                                <a class="page-link rounded-pill shadow-sm {% if items.number == num %}text-white{% else %}text-dark{% endif %}"
+                                                   href="?page_{{ category }}={{ num }}" 
+                                                   style="{% if items.number == num %} background-color: #ff6600; color: white; {% else %} background-color: #f5f5f5; color: #444444; border: 1px solid #e0e0e0; {% endif %}">
+                                                    {{ num }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                        {% if items.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link rounded-pill shadow-sm" href="?page_{{ category }}={{ items.next_page_number }}" 
+                                                   aria-label="Next" style="background-color: #f5f5f5; color: #444444; border: 1px solid #e0e0e0;">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

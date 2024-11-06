@@ -1,0 +1,20 @@
+<!-- templates/inventory/project_create.html -->
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Create a New Project</h2>
+
+    <!-- Back Button -->
+    <button onclick="window.history.back()" class="btn btn-secondary mb-3">Go Back</button>
+
+    <!-- Project Creation Form -->
+    <form method="POST" action="{% url 'create_project_page' %}">
+        {% csrf_token %}
+        {{ form.name|as_crispy_field }}
+        {{ form.description|as_crispy_field }}
+        <button type="submit" class="btn btn-primary">Create Project</button>
+    </form>
+</div>
+{% endblock %}

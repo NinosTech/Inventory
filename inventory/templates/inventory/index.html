@@ -1,0 +1,18 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+    <div class="row">
+        <div class="col-sm-11 col-md-4 mx-auto mt-5 px-3">
+            <h1 class="fw-light">Ninos Inventory</h1>
+            <p class="fw-light">Know where your stuff is so you don't have to overspend</p>
+
+            <!-- Regular User Button -->
+            <div>
+                <a href="{% url 'dashboard' %}" class="btn btn-primary">Start Working</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

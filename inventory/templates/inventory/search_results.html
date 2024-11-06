@@ -1,0 +1,50 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>Search Results for "{{ search_query }}"</h2>
+        
+        {% if grouped_inventory %}
+            {% for project, categories in grouped_inventory.items %}
+                <div class="project-section my-5">
+                    <h3 class="project-title p-3 bg-secondary text-white rounded">{{ project }}</h3>
+
+                    {% for category, items in categories.items %}
+                        <div class="category-section my-4">
+                            <h5 class="category-title p-2 bg-primary text-white rounded">{{ category }}</h5>
+                            <div class="row mt-4">
+                                {% for item in items %}
+                                    <div class="col-md-4 col-sm-6 mb-4">
+                                        <div class="card h-100 shadow-sm">
+                                            {% if item.image %}
+                                                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                                            {% else %}
+                                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
+                                            {% endif %}
+
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ item.name }}</h5>
+                                                <p class="card-text"><strong>Price:</strong> ${{ item.price }}</p>
+                                                <p class="card-text"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                                            </div>
+
+                                            <div class="card-footer d-flex justify-content-between">
+                                                {% if user.is_staff %}
+                                                    <a href="{% url 'edit-item' item.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+                                                    <a href="{% url 'delete-item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found for "{{ search_query }}".</p>
+        {% endif %}
+    </div>
+{% endblock %}

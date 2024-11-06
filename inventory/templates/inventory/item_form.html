@@ -1,0 +1,46 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <!-- JavaScript Back Button -->
+    <button onclick="window.history.back()" class="btn btn-outline-primary my-3 mx-4">Go Back</button>
+
+    <div class="row">
+        <div class="col-11 col-md-4 mx-auto mt-5">
+            <h1>Inventory Item</h1>
+
+            <!-- Add enctype to handle file uploads -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Render form excluding the project field -->
+                {{ form.non_field_errors }}  <!-- General form validation errors -->
+
+                {{ form.name|as_crispy_field }}
+                {{ form.name.errors }}  <!-- Display specific errors for the name field -->
+
+                {{ form.quantity|as_crispy_field }}
+                {{ form.quantity.errors }}  <!-- Display specific errors for the quantity field -->
+
+                {{ form.category|as_crispy_field }}
+                {{ form.category.errors }}  <!-- Display specific errors for the category field -->
+
+                {{ form.price|as_crispy_field }}
+                {{ form.price.errors }}  <!-- Display specific errors for the price field -->
+
+                <!-- Image upload field -->
+                {{ form.image|as_crispy_field }}
+                {{ form.image.errors }}  <!-- Display specific errors for the image field -->
+
+                <!-- Conditionally change the button text -->
+                <div class="mt-3">
+                    {% if form.instance.pk %}
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary">Add Item</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
