@@ -1,0 +1,105 @@
+/* Styles for Category Section Separation */
+.category-section {
+    border-top: 3px solid #007bff; /* Blue border at the top of each category section */
+    padding-top: 1.5rem; /* Adds spacing above the category items */
+    margin-top: 2rem; /* Adds separation between each category */
+}
+
+.category-title {
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #007bff; /* Blue background for the category title */
+    color: white; /* White text color */
+    padding: 0.75rem 1rem; /* Padding around the category title */
+    border-radius: 5px; /* Slightly rounded corners */
+}
+
+/* Color Scheme */
+:root {
+    --primary-color: #f96302; /* Home Depot orange */
+    --secondary-color: #333333; /* Dark grey for text */
+    --light-grey: #f8f9fa; /* Light grey background */
+    --dark-grey: #666666; /* Medium grey for headings */
+    --accent-color: #ffb732; /* Lighter orange for accents */
+}
+
+/* Typography */
+body {
+    font-family: Arial, sans-serif; /* Clean and modern sans-serif font */
+    color: var(--secondary-color);
+    background-color: var(--light-grey);
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-link, .navbar-brand {
+    color: white !important;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+/* Header and Titles */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--dark-grey);
+    font-weight: bold;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 8px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+.card-body p {
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Search Bar */
+.form-control {
+    border-radius: 20px;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
