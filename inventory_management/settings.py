@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-w07&5gwrdk==i^43uy8szu2ftmy_-izw!_-((jd!p-e5l)whj6
 DEBUG = False
 
 ALLOWED_HOSTS = ['ninosmarble.com', 'www.ninosarble.com', 'localhost', 'inventory.ninosmarble.com', 
-'www.inventory.ninosmarble.com'
+'www.inventory.ninosmarble.com', '*'
 ]
 
 
