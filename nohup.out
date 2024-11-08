@@ -1040,3 +1040,4 @@ django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '193.203.164.13
 Bad Request: /login
 Bad Request: /login
 Forbidden (Origin checking failed - https://inventory.ninosmarble.com does not match any trusted origins.): /login/
+Forbidden (Origin checking failed - https://inventory.ninosmarble.com does not match any trusted origins.): /login/
