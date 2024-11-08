@@ -24,10 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w07&5gwrdk==i^43uy8szu2ftmy_-izw!_-((jd!p-e5l)whj6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['ninosmarble.com', 'www.ninosarble.com', 'localhost', 'inventory.ninosmarble.com', 
-'www.inventory.ninosmarble.com', '*'
+ALLOWED_HOSTS = [
+    'ninosmarble.com',
+    'www.ninosmarble.com',
+    'inventory.ninosmarble.com',
+    'www.inventory.ninosmarble.com',
 ]
 
 
@@ -163,3 +166,8 @@ LOGGING = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://ninosmarble.com',
+    'https://www.ninosmarble.com',
+]
