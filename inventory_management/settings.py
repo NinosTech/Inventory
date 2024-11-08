@@ -168,6 +168,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://ninosmarble.com',
-    'https://www.ninosmarble.com',
+    'https://inventory.ninosmarble.com',
+    'https://www.inventory.ninosmarble.com',
 ]
