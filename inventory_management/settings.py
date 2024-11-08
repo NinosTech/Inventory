@@ -10,11 +10,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-w07&5gwrdk==i^43uy8
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
-    'ninosmarble.com',
-    'www.ninosmarble.com',
+    '127.0.0.1', 
+    'localhost', 
     'inventory.ninosmarble.com',
-    'www.inventory.ninosmarble.com',
+    'www.inventory.ninosmarble.com'
 ]
+
 
 # Application definition
 
