@@ -38,6 +38,20 @@ class InventoryItemForm(forms.ModelForm):
         # For main inventory, skip duplicate check across projects
         return cleaned_data
 
+        def clean_image(self):
+            image = self.cleaned_data.get('image')
+            if image:
+                # Validate file size
+                max_size = 2 * 1024 * 1024  # 2MB
+                if image.size > max_size:
+                    raise forms.ValidationError("Image file size must be under 2MB.")
+                
+                # Validate image format (optional)
+                valid_formats = ['JPEG', 'PNG']
+                if image.image.format not in valid_formats:
+                    raise forms.ValidationError("Invalid image format. Only JPEG and PNG are allowed.")
+            return image
+
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
