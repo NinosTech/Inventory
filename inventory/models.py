@@ -19,6 +19,8 @@ class InventoryItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="inventory_items", blank=False, null=False)
     image = models.ImageField(upload_to='inventory_images/', null=True, blank=True)
+    
+    location = models.ForeignKey('Location', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -46,3 +48,9 @@ class MaterialHistory(models.Model):
 
     def __str__(self):
         return f'{self.quantity_change} units {self.operation}d on {self.date}'
+
+class Location(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

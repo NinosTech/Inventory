@@ -70,6 +70,11 @@
                                                 <h5 class="card-title" style="color: var(--secondary-color); font-weight: bold;">{{ item.name }}</h5>
                                                 <p class="card-text"><strong>Price:</strong> ${{ item.price }}</p>
                                                 <p class="card-text"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                                                {% if item.location %}
+                                                    <p class="card-text"><strong>Location:</strong> {{ item.location.name }}</p>
+                                                {% else %}
+                                                    <p class="card-text"><strong>Location:</strong> Not specified</p>
+                                                {% endif %}
                                             </div>
 
                                             <div class="card-footer d-flex justify-content-between" style="background-color: var(--light-grey); border-top: none;">

@@ -28,9 +28,12 @@
                 {{ form.price|as_crispy_field }}
                 {{ form.price.errors }}  <!-- Display specific errors for the price field -->
 
-                <!-- Image upload field -->
                 {{ form.image|as_crispy_field }}
                 {{ form.image.errors }}  <!-- Display specific errors for the image field -->
+
+                <!-- Location dropdown field -->
+                {{ form.location|as_crispy_field }}
+                {{ form.location.errors }}  <!-- Display specific errors for the location field -->
 
                 <!-- Conditionally change the button text -->
                 <div class="mt-3">

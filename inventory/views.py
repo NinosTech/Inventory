@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import UserRegisterForm, InventoryItemForm, ProjectForm
-from .models import InventoryItem, Category, Project, MaterialHistory
+from .models import InventoryItem, Category, Project, MaterialHistory, Location
 
 class Index(TemplateView):
     template_name = 'inventory/index.html'

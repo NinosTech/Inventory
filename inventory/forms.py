@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, Category, InventoryItem, InventoryItem
+from .models import Project, Category, InventoryItem, InventoryItem, Location
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -12,10 +12,15 @@ class UserRegisterForm(UserCreationForm):
 
 class InventoryItemForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(), initial=0)
+    location = forms.ModelChoiceField(
+        queryset=Location.objects.all(),
+        empty_label="Select a Location",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
 
     class Meta:
         model = InventoryItem
-        fields = ['name', 'quantity', 'category', 'price', 'image']
+        fields = ['name', 'quantity', 'category', 'price', 'image', 'location']
 
     def __init__(self, *args, **kwargs):
         self.project = kwargs.pop('project', None)  # Accept project as an argument
