@@ -24,7 +24,7 @@ class InventoryItem(models.Model):
     location = models.ForeignKey('Location', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.catergory.name if self.category else 'Uncategorized'})"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # Save the image first to get a valid path
@@ -53,13 +53,14 @@ class InventoryItem(models.Model):
         img.close()
 
 class Category(models.Model):
-	name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
 
-	class Meta:
-		verbose_name_plural = 'categories'
+    class Meta:
+        verbose_name_plural = 'categories'
+        ordering = ['name']  # Ensure categories are listed in alphabetical order
 
-	def __str__(self):
-		return self.name
+    def __str__(self):
+        return self.name
 
 class MaterialHistory(models.Model):
     OPERATION_CHOICES = (

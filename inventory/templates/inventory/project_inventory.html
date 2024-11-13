@@ -33,8 +33,9 @@
             <ul class="nav nav-tabs border-0" style="font-weight: bold;">
                 {% for category, items in grouped_inventory.items %}
                     <li class="nav-item">
-                        <a class="nav-link {% if forloop.first %}active{% endif %}" 
+                        <a class="nav-link {% if category == active_category %}active{% endif %}" 
                            data-bs-toggle="tab" href="#category_{{ forloop.counter }}" 
+                           onclick="setActiveCategory('{{ category }}')"
                            style="color: #FFFFFF; background-color: #FF6600; border-radius: 8px 8px 0 0; padding: 10px; margin-right: 5px; text-align: center;">
                             {{ category }}
                         </a>
@@ -48,7 +49,7 @@
             <div class="tab-content">
                 {% if grouped_inventory %}
                     {% for category, items in grouped_inventory.items %}
-                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="category_{{ forloop.counter }}">
+                        <div class="tab-pane fade {% if category == active_category %}show active{% endif %}" id="category_{{ forloop.counter }}">
                             <div class="category-section my-5">
                                 <h5 class="category-title p-3 rounded" style="background-color: var(--primary-color); color: white; font-weight: bold;">
                                     {{ category }}
@@ -89,16 +90,17 @@
                                         <ul class="pagination justify-content-center">
                                             {% if items.has_previous %}
                                                 <li class="page-item">
-                                                    <a class="page-link rounded-pill shadow-sm" href="?page_{{ category }}={{ items.previous_page_number }}" 
+                                                    <a class="page-link rounded-pill shadow-sm" 
+                                                       href="?page_{{ category }}={{ items.previous_page_number }}&active_category={{ category }}" 
                                                        aria-label="Previous" style="background-color: #f5f5f5; color: #444444; border: 1px solid #e0e0e0;">
-                                                        <span aria-hidden="true">&laquo;</span>
+                                                        &laquo;
                                                     </a>
                                                 </li>
                                             {% endif %}
                                             {% for num in items.paginator.page_range %}
                                                 <li class="page-item {% if items.number == num %}active{% endif %}">
                                                     <a class="page-link rounded-pill shadow-sm {% if items.number == num %}text-white{% else %}text-dark{% endif %}"
-                                                       href="?page_{{ category }}={{ num }}" 
+                                                       href="?page_{{ category }}={{ num }}&active_category={{ category }}" 
                                                        style="{% if items.number == num %} background-color: #ff6600; color: white; {% else %} background-color: #f5f5f5; color: #444444; border: 1px solid #e0e0e0; {% endif %}">
                                                         {{ num }}
                                                     </a>
@@ -106,9 +108,10 @@
                                             {% endfor %}
                                             {% if items.has_next %}
                                                 <li class="page-item">
-                                                    <a class="page-link rounded-pill shadow-sm" href="?page_{{ category }}={{ items.next_page_number }}" 
+                                                    <a class="page-link rounded-pill shadow-sm" 
+                                                       href="?page_{{ category }}={{ items.next_page_number }}&active_category={{ category }}" 
                                                        aria-label="Next" style="background-color: #f5f5f5; color: #444444; border: 1px solid #e0e0e0;">
-                                                        <span aria-hidden="true">&raquo;</span>
+                                                        &raquo;
                                                     </a>
                                                 </li>
                                             {% endif %}
@@ -128,4 +131,12 @@
             <a href="{% url 'dashboard' %}" class="btn btn-secondary rounded-pill px-4 py-2 shadow-sm">Back to Dashboard</a>
         </div>
     </div>
+
+    <script>
+        function setActiveCategory(category) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('active_category', category);
+            window.history.replaceState({}, '', url);
+        }
+    </script>
 {% endblock %}

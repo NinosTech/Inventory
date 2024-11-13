@@ -24,14 +24,15 @@ class Dashboard(LoginRequiredMixin, View):
         items = items.order_by('category__name', 'name')
 
         grouped_inventory = {}
-        items_per_page = 6
+        items_per_page = 9
         for item in items:
-            category = item.category.name
+            category = item.category.name if item.category else 'Uncategorized'  # Handle missing categories
             if category not in grouped_inventory:
                 grouped_inventory[category] = []
             grouped_inventory[category].append(item)
 
         category_pages = {}
+        active_category = request.GET.get('active_category', list(grouped_inventory.keys())[0])  # Default to first category
         for category, item_list in grouped_inventory.items():
             paginator = Paginator(item_list, items_per_page)
             page_number = request.GET.get(f'page_{category}', 1)
@@ -41,6 +42,7 @@ class Dashboard(LoginRequiredMixin, View):
             'main_project': main_project,
             'projects': projects,
             'grouped_inventory': category_pages,
+            'active_category': active_category,
         })
 
 class SearchResultsView(LoginRequiredMixin, View):
@@ -214,15 +216,16 @@ class ProjectInventoryView(LoginRequiredMixin, View):
         items = items.order_by('category__name', 'name')
 
         paginated_inventory = {}
-        items_per_page = 6
+        items_per_page = 9
 
         for item in items:
-            category = item.category.name
+            category = item.category.name if item.category else 'Uncategorized'
             if category not in paginated_inventory:
                 paginated_inventory[category] = []
             paginated_inventory[category].append(item)
 
         category_pages = {}
+        active_category = request.GET.get('active_category', list(paginated_inventory.keys())[0])  # Default to first category
         for category, item_list in paginated_inventory.items():
             paginator = Paginator(item_list, items_per_page)
             page_number = request.GET.get(f'page_{category}', 1)
@@ -231,4 +234,5 @@ class ProjectInventoryView(LoginRequiredMixin, View):
         return render(request, self.template_name, {
             'project': project,
             'grouped_inventory': category_pages,
+            'active_category': active_category,
         })
